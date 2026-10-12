@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ветер · учебная турбина</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><p class="eyebrow">WIND STATION / ЭТАП 01</p><h1>Энергия ветра</h1><p>Исследуйте, как скорость ветра меняет мощность турбины.</p></header>
+<section class="panel"><label for="wind">Ветер на высоте ротора · <output id="wind-value" for="wind">8.0 м/с</output></label><input id="wind" type="range" min="0" max="30" step="0.1" value="8"><div class="metrics" aria-live="polite"><div><span>Мощность</span><strong id="power"></strong></div><div><span>Обороты</span><strong id="rpm"></strong></div><div><span>Режим</span><strong id="state"></strong></div></div></section>
+<section class="panel"><h2>Кривая мощности</h2><canvas id="chart" width="900" height="360" role="img" aria-label="Кривая мощности: до 3 м/с турбина стоит, затем мощность растёт до 2 МВт, при 25 м/с защитная остановка"></canvas><p>По горизонтали — ветер (м/с), по вертикали — мощность (МВт). Светлая точка показывает выбранное значение.</p></section>
+<section class="panel explanation"><h2>Почему ветер так важен?</h2><p><b>P = ½ · ρ · A · v³ · Cp</b>. Мощность зависит от куба скорости: удвоение ветра даёт восьмикратную аэродинамическую мощность до ограничения турбины.</p><p>Радиус ротора: 40 м. Сухой воздух: 15 °C, 101 325 Па, <span id="density"></span>. Cp = 0,45 при оптимальном TSR = 7; предел Беца — 0,593.</p><p>Запуск при 3 м/с; выход ограничен 2 МВт; остановка при 25 м/с. При этих условиях 2 МВт достигаются примерно при 11,3 м/с. Выше 12 м/с обороты ограничены. Это учебная модель с постоянным Cp: реальное управление углом лопастей, потери и динамика ротора появятся позднее.</p><p>Скорость уже задана на высоте ступицы (80 м). Для будущих погодных данных модель содержит степенной закон сдвига ветра; сейчас он не применяется к слайдеру.</p></section>
+<footer>Учебная модель · без измерений и внешних сервисов</footer>
+</main><script type="module" src="app.js"></script></body></html>
