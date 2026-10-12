@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101f29">
-  <title>Энергия ветра · интерактивная турбина</title>
+  <meta name="theme-color" content="#101619">
+  <title>Ветрогенератор — расчёт мощности</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
   <script type="importmap">
@@ -14,65 +14,101 @@
 <body>
 <main>
   <header class="page-header">
-    <div><p class="eyebrow">WIND STATION / ЭТАП 02</p><h1>Энергия ветра</h1></div>
-    <p class="intro">От движения воздуха<br>до электричества.</p>
+    <h1>Ветрогенератор</h1>
+    <p>Расчётная мощность до 2 МВт</p>
   </header>
-  <div class="simulator">
-    <section class="panel scene-panel" aria-labelledby="scene-title">
-      <div class="section-heading"><h2 id="scene-title">Турбина в ландшафте</h2><span class="badge">3D · ЖИВАЯ МОДЕЛЬ</span></div>
+
+  <div class="simulation">
+    <section class="scene-panel" aria-labelledby="scene-title">
+      <div class="section-heading">
+        <h2 id="scene-title">Турбина</h2>
+        <p>Ротор Ø 80 м <span aria-hidden="true">·</span> Ступица 80 м</p>
+      </div>
       <div class="scene-frame">
         <div id="scene-container"></div>
-        <p id="scene-status" class="scene-status" role="status">Загрузка 3D-сцены…</p>
-        <div class="scene-scale" aria-hidden="true"><span>80 м <small>высота ступицы</small></span><span>40 м <small>радиус ротора</small></span></div>
+        <p id="scene-status" class="scene-status" role="status">Загрузка сцены…</p>
       </div>
-      <div class="scene-toolbar" aria-label="Управление видом">
-        <button type="button" data-camera="left" aria-label="Повернуть камеру влево" disabled>↶</button>
-        <button type="button" data-camera="right" aria-label="Повернуть камеру вправо" disabled>↷</button>
-        <button type="button" data-camera="in" aria-label="Приблизить камеру" disabled>+</button>
-        <button type="button" data-camera="out" aria-label="Отдалить камеру" disabled>−</button>
-        <button type="button" data-camera="reset" disabled>Сбросить вид</button>
-        <button type="button" id="animation-toggle" aria-pressed="false" disabled>Пауза анимации</button>
+      <div class="scene-toolbar" role="group" aria-label="Управление камерой и анимацией">
+        <div class="camera-buttons">
+          <button type="button" data-camera="left" aria-label="Повернуть камеру влево" title="Повернуть влево" disabled>↶</button>
+          <button type="button" data-camera="right" aria-label="Повернуть камеру вправо" title="Повернуть вправо" disabled>↷</button>
+          <button type="button" data-camera="in" aria-label="Приблизить камеру" title="Приблизить" disabled>+</button>
+          <button type="button" data-camera="out" aria-label="Отдалить камеру" title="Отдалить" disabled>−</button>
+          <button type="button" data-camera="reset" disabled>Сбросить вид</button>
+        </div>
+        <button type="button" id="animation-toggle" disabled>Пауза</button>
       </div>
-      <p class="scene-help">Перетащите сцену, чтобы повернуть камеру. Колесо мыши меняет масштаб. Кнопки доступны с клавиатуры.</p>
-      <p id="animation-note" class="scene-help">Скорость лопастей соответствует расчётным оборотам.</p>
+      <div class="scene-notes">
+        <p>Перетаскивание — поворот, колесо — масштаб.</p>
+        <p id="animation-note" role="status">Вращение по расчётным оборотам.</p>
+      </div>
     </section>
-    <section class="panel controls-panel" aria-labelledby="wind-title">
-      <p class="eyebrow">УПРАВЛЕНИЕ ТУРБИНОЙ</p>
-      <h2 id="wind-title">Поймайте ветер</h2>
-      <label for="wind">Скорость на высоте ротора</label>
-      <output id="wind-value" for="wind">8,0 м/с</output>
-      <input id="wind" type="range" min="0" max="30" step="0.1" value="8" aria-describedby="wind-hint">
-      <div class="range-labels" aria-hidden="true"><span>0 м/с</span><span>30 м/с</span></div>
-      <p id="wind-hint" class="hint">Меняйте скорость и наблюдайте за вращением и мощностью.</p>
-      <div class="metrics" aria-live="polite">
-        <div class="power-metric"><span>Мощность</span><strong id="power">—</strong></div>
-        <div><span>Обороты ротора</span><strong id="rpm">—</strong></div>
-        <div><span>Режим</span><strong id="state">—</strong></div>
+
+    <section class="control-panel" aria-labelledby="wind-title">
+      <div class="wind-control">
+        <h2 id="wind-title">Ветер</h2>
+        <div class="wind-heading">
+          <label for="wind">Скорость<br><span>на высоте 80 м</span></label>
+          <div class="wind-reading"><output id="wind-value" for="wind" aria-live="off">8,0</output><span class="unit">м/с</span></div>
+        </div>
+        <input id="wind" type="range" min="0" max="30" step="0.1" value="8" aria-describedby="wind-hint">
+        <div class="range-labels" aria-hidden="true"><span>0</span><span>15</span><span>30 м/с</span></div>
+        <p id="wind-hint" class="field-note">Шаг 0,1 м/с. Можно менять стрелками.</p>
       </div>
-      <p class="hint limits">Запуск · 3 м/с<br>Ограничение мощности · 2 МВт<br>Защитная остановка · 25 м/с</p>
+
+      <div class="results" aria-live="polite" aria-atomic="true">
+        <dl class="metrics">
+          <div class="metric">
+            <dt>Мощность</dt>
+            <dd><span id="power">—</span><span class="unit">МВт</span></dd>
+          </div>
+          <div class="metric">
+            <dt>Обороты ротора</dt>
+            <dd><span id="rpm">—</span><span class="unit">об/мин</span></dd>
+          </div>
+        </dl>
+        <div id="operating-status" class="operating-status" data-mode="active">
+          <h3 id="state">Расчёт…</h3>
+          <p id="operating-note">Показатели определяются по скорости ветра.</p>
+        </div>
+      </div>
+
+      <dl class="limits">
+        <div><dt>Запуск</dt><dd>от 3 м/с</dd></div>
+        <div><dt>Предел оборотов</dt><dd>с 12 м/с</dd></div>
+        <div><dt>Защитная остановка</dt><dd>от 25 м/с</dd></div>
+      </dl>
     </section>
   </div>
-  <div class="details">
-    <section class="panel chart-panel">
-      <div class="section-heading"><h2>Кривая мощности</h2><span class="badge">РАСЧЁТ</span></div>
-      <canvas id="chart" width="900" height="360" role="img" aria-label="Кривая мощности: до 3 м/с турбина стоит, затем мощность растёт до 2 МВт, при 25 м/с защитная остановка"></canvas>
-      <p>Ветер по горизонтали (м/с), мощность по вертикали (МВт). Светлая точка — выбранное значение.</p>
+
+  <div class="analysis">
+    <section class="chart-panel" aria-labelledby="chart-title">
+      <div class="section-heading"><h2 id="chart-title">Мощность от скорости ветра</h2></div>
+      <p id="chart-selection" class="chart-selection">8,0 м/с → 0,709 МВт</p>
+      <canvas id="chart" width="640" height="260" role="img" aria-label="Кривая мощности: до 3 м/с мощность нулевая, затем растёт до 2 МВт; от 25 м/с защитная остановка."></canvas>
+      <p class="chart-note">Точка — текущий расчёт. Затенённая область — защитная остановка.</p>
     </section>
-    <section class="panel explanation">
-      <p class="eyebrow">КАК ЭТО РАБОТАЕТ</p><h2>Ветер в третьей степени</h2>
-      <p class="formula">P = ½ · ρ · A · v³ · Cp</p>
-      <p>Удвоение скорости даёт восьмикратную аэродинамическую мощность до ограничения турбины.</p>
-      <p>Сухой воздух: 15 °C, 101 325 Па,<br>плотность <span id="density">—</span>. Cp = 0,45; предел Беца — 0,593. Оптимальный TSR = 7.</p>
+
+    <section class="model-panel" aria-labelledby="model-title">
+      <h2 id="model-title">Модель расчёта</h2>
+      <p class="formula">P = ½ ρ A v³ Cp</p>
+      <p class="formula-explanation">ρ — плотность воздуха, A — площадь ротора,<br>v — скорость ветра, Cp — коэффициент использования энергии ветра.</p>
+      <dl class="parameters">
+        <div><dt>Воздух</dt><dd>15 °C · 101 325 Па</dd></div>
+        <div><dt>Плотность</dt><dd id="density">—</dd></div>
+        <div><dt>Cp / предел Беца</dt><dd>0,45 / 0,593</dd></div>
+      </dl>
+      <p class="example">При 4 м/с — 0,089 МВт, при 8 м/с — 0,709 МВт. До ограничения мощности удвоение скорости увеличивает результат в 8 раз.</p>
+      <details class="model-notes">
+        <summary>Допущения</summary>
+        <p>Параметры турбины условные. Cp постоянный, потери и инерция ротора не учитываются. Обороты меняются сразу со скоростью ветра.</p>
+        <p>2 МВт достигаются примерно при 11,3 м/с; с 12 м/с обороты ограничены. Оптимальное отношение скорости кончика лопасти к скорости ветра (TSR) равно 7. Выше 12 м/с TSR уменьшается, а Cp в этой упрощённой модели остаётся постоянным.</p>
+        <p>Слайдер задаёт ветер на высоте ступицы. Сдвиг ветра с высотой к нему повторно не применяется. Пауза сцены останавливает только изображение.</p>
+      </details>
     </section>
   </div>
-  <details class="model-notes panel">
-    <summary>Параметры и допущения модели</summary>
-    <p>Радиус ротора 40 м, высота ступицы 80 м. Скорость слайдера уже задана на этой высоте; степенной закон сдвига ветра подготовлен для будущих погодных данных.</p>
-    <p>2 МВт достигаются примерно при 11,3 м/с в этих условиях; выше 12 м/с обороты ограничены. При ветре ниже 3 м/с и от 25 м/с ротор стоит. Вращение обновляется по прошедшему времени, а не по количеству кадров.</p>
-    <p>Параметры турбины условные. Cp пока постоянный, потери и инерция ротора не учитываются: обороты меняются сразу вместе со слайдером. Пауза останавливает только визуализацию. Управление pitch, погода и реальные данные будут следующими этапами.</p>
-  </details>
-  <footer><span>WIND STATION</span><span>Учебная модель · без измерений и внешних сервисов</span></footer>
-  <noscript><p>Для интерактивного расчёта и 3D-сцены включите JavaScript в браузере.</p></noscript>
+  <footer>Учебная модель. Погодные данные не подключены.</footer>
+  <noscript><p>Включите JavaScript для расчёта и 3D-сцены.</p></noscript>
 </main>
 <script type="module" src="app.js"></script>
 </body>
