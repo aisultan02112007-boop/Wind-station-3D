@@ -51,5 +51,5 @@ export function calculatePower(windSpeed, temperatureC = 15, pressurePa = 101325
   // lambda = omega*r/v; безразмерный TSR; при v=0 принято 0, чтобы избежать деления на ноль.
   const tsr = windSpeed > 0 ? angularSpeed * turbine.radius / windSpeed : 0;
   const state = windSpeed < turbine.cutIn ? 'Ожидание ветра' : windSpeed >= turbine.cutOut ? 'Защитная остановка' : power >= turbine.ratedPower ? 'Номинальная мощность' : 'Генерация';
-  return { power, aerodynamicPower, density, area, cp, rpm, tsr, state };
+  return { power, aerodynamicPower, density, area, cp, angularSpeed, rpm, tsr, state };
 }

@@ -43,3 +43,16 @@ test('Переполнение и большие конечные скорост
   assert.throws(() => airDensity(-273.1499999999999, Number.MAX_VALUE), RangeError);
   assert.throws(() => windAtHeight(Number.MAX_VALUE, 80, 10, 1), RangeError);
 });
+
+test('Угловая скорость для 3D совпадает с TSR, оборотами и порогами модели', () => {
+  // omega = lambda*v/r; lambda = 7, v = 8 m/s, r = 40 m => omega = 1.4 rad/s.
+  const result = calculatePower(8);
+  assert.equal(result.angularSpeed, 1.4);
+  // n = omega*60/(2*pi); omega в rad/s, n в rpm.
+  assert.ok(Math.abs(result.rpm - 1.4 * 60 / (2 * Math.PI)) < 1e-12);
+  assert.equal(calculatePower(0).angularSpeed, 0);
+  assert.equal(calculatePower(2.999).angularSpeed, 0);
+  assert.equal(calculatePower(3).angularSpeed, 0.525);
+  assert.equal(calculatePower(20).angularSpeed, 2.1);
+  assert.equal(calculatePower(25).angularSpeed, 0);
+});
