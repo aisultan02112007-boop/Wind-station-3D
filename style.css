@@ -18,6 +18,22 @@ h2 { font-size: 15px; font-weight: 600; }
 h3 { font-size: 15px; font-weight: 600; }
 .page-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid var(--line); }
 .page-header p { color: var(--muted); font-size: 13px; }
+.game-panel { border-bottom: 1px solid var(--line); padding: 20px 0 16px; }
+.game-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(225px, 1fr); gap: 20px; margin: 0; }
+.game-metrics dt { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.game-metrics dd { margin: 0; font-size: 23px; font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+#money { color: var(--accent); }
+.game-toolbar { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; margin-top: 18px; }
+.time-controls, #time-speeds { display: flex; flex-wrap: wrap; gap: 6px; }
+#game-pause { min-width: 147px; }
+#time-speeds button[aria-pressed="true"] { border-color: var(--accent); color: #d6ede7; background: #293c38; }
+#game-status { font-size: 13px; color: var(--muted); }
+.session-note { margin-top: 12px; color: var(--muted); font-size: 12px; }
+.economy-panel { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.economy-panel .parameters { margin: 14px 0; }
+.economy-panel p { color: var(--muted); font-size: 12px; margin-top: 8px; }
+.economy-panel summary { font-size: 12px; }
+.economy-panel dd { overflow-wrap: anywhere; }
 .simulation { display: grid; grid-template-columns: minmax(0, 1fr) 300px; margin-top: 24px; border: 1px solid var(--line); }
 .scene-panel { min-width: 0; }
 .section-heading { min-height: 48px; padding: 14px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; }
@@ -81,6 +97,7 @@ summary { cursor: pointer; padding: 8px 0; }
 footer { padding: 20px 0 24px; color: var(--muted); font-size: 12px; }
 @media (max-width: 1000px) {
   main { padding: 0 18px; }
+  .game-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .simulation { grid-template-columns: minmax(0, 1fr) 280px; }
   .control-panel { padding: 20px; }
   .analysis { grid-template-columns: minmax(0, 1fr) 320px; }
@@ -90,6 +107,10 @@ footer { padding: 20px 0 24px; color: var(--muted); font-size: 12px; }
 @media (max-width: 760px) {
   main { padding: 0 14px; }
   .page-header { padding: 18px 0; }
+  .game-metrics { gap: 18px 12px; }
+  .game-metrics dd { font-size: 20px; }
+  .game-time dt { min-height: 36px; }
+  #game-status { min-height: 40px; }
   .simulation, .analysis { grid-template-columns: 1fr; margin-top: 16px; }
   #scene-container { height: clamp(260px, 40vh, 380px); }
   .control-panel { border-left: 0; border-top: 1px solid var(--line); padding: 20px; }

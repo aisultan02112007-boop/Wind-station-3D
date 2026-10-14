@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101619">
-  <title>Ветрогенератор — расчёт мощности</title>
+  <title>Ветропарк — производство энергии</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
   <script type="importmap">
@@ -14,9 +14,26 @@
 <body>
 <main>
   <header class="page-header">
-    <h1>Ветрогенератор</h1>
-    <p>Расчётная мощность до 2 МВт</p>
+    <h1>Ветропарк</h1>
+    <p><span id="city">—</span> · Одна учебная турбина, до 2 МВт</p>
   </header>
+
+  <section class="game-panel" aria-label="Состояние игры">
+    <dl class="game-metrics">
+      <div><dt>Деньги</dt><dd><span id="money">—</span> <span class="unit">₸</span></dd></div>
+      <div><dt>Общая мощность</dt><dd><span id="total-power">—</span> <span class="unit">МВт</span></dd></div>
+      <div><dt>Выработка сегодня</dt><dd><span id="energy-today">—</span> <span class="unit">кВт·ч</span></dd></div>
+      <div class="game-time"><dt>Игровое время · <span id="game-date">—</span></dt><dd id="game-clock">—</dd></div>
+    </dl>
+    <div class="game-toolbar">
+      <div class="time-controls" role="group" aria-label="Управление временем игры">
+        <button type="button" id="game-pause">Пауза игры</button>
+        <div id="time-speeds" role="group" aria-label="Скорость игры"></div>
+      </div>
+      <p id="game-status" role="status">Запуск игры…</p>
+    </div>
+    <p class="session-note">В скрытой вкладке время останавливается. Сохранения пока нет: обновление страницы начнёт новую игру.</p>
+  </section>
 
   <div class="simulation">
     <section class="scene-panel" aria-labelledby="scene-title">
@@ -36,7 +53,7 @@
           <button type="button" data-camera="out" aria-label="Отдалить камеру" title="Отдалить" disabled>−</button>
           <button type="button" data-camera="reset" disabled>Сбросить вид</button>
         </div>
-        <button type="button" id="animation-toggle" disabled>Пауза</button>
+        <button type="button" id="animation-toggle" disabled>Пауза сцены</button>
       </div>
       <div class="scene-notes">
         <p>Перетаскивание — поворот, колесо — масштаб.</p>
@@ -78,6 +95,19 @@
         <div><dt>Предел оборотов</dt><dd>с 12 м/с</dd></div>
         <div><dt>Защитная остановка</dt><dd>от 25 м/с</dd></div>
       </dl>
+      <section class="economy-panel" aria-labelledby="economy-title">
+        <h2 id="economy-title">Продажа энергии</h2>
+        <dl class="parameters">
+          <div><dt>Игровой тариф</dt><dd id="tariff">—</dd></div>
+          <div><dt>Выработка за всё время</dt><dd><span id="energy-total">—</span> кВт·ч</dd></div>
+          <div><dt>Доход от продажи</dt><dd><span id="revenue">—</span> ₸</dd></div>
+        </dl>
+        <details>
+          <summary>Как считается доход</summary>
+          <p>Энергия = мощность × время. При 1 МВт за игровой час получится 1 000 кВт·ч.</p>
+          <p>Вся энергия продаётся. Тариф условный; расходы и ограничения сети пока не учитываются. Ветер задаётся вручную.</p>
+        </details>
+      </section>
     </section>
   </div>
 
@@ -103,11 +133,11 @@
         <summary>Допущения</summary>
         <p>Параметры турбины условные. Cp постоянный, потери и инерция ротора не учитываются. Обороты меняются сразу со скоростью ветра.</p>
         <p>2 МВт достигаются примерно при 11,3 м/с; с 12 м/с обороты ограничены. Оптимальное отношение скорости кончика лопасти к скорости ветра (TSR) равно 7. Выше 12 м/с TSR уменьшается, а Cp в этой упрощённой модели остаётся постоянным.</p>
-        <p>Слайдер задаёт ветер на высоте ступицы. Сдвиг ветра с высотой к нему повторно не применяется. Пауза сцены останавливает только изображение.</p>
+        <p>Слайдер задаёт ветер на высоте ступицы. Сдвиг ветра с высотой к нему повторно не применяется. Пауза игры останавливает время и начисления; пауза сцены — только изображение.</p>
       </details>
     </section>
   </div>
-  <footer>Учебная модель. Погодные данные не подключены.</footer>
+  <footer>Учебная модель. Астана пока обозначает место игры; климатические и реальные погодные данные не подключены.</footer>
   <noscript><p>Включите JavaScript для расчёта и 3D-сцены.</p></noscript>
 </main>
 <script type="module" src="app.js"></script>
